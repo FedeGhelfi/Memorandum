@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class MemoList {
 
-    private final ArrayList<Memo> memoArrayList;
+    private ArrayList<Memo> memoArrayList;
 
     // constructor
     public MemoList () {
@@ -25,6 +25,10 @@ public class MemoList {
 
     public Memo getMemoAtIndex(int position) {
        return memoArrayList.get(position);
+    }
+
+    public ArrayList<Memo> getMemoList(){
+        return memoArrayList;
     }
 
 
