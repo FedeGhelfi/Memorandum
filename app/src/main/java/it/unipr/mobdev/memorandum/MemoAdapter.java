@@ -14,6 +14,10 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> {
 
     private ArrayList<Memo> memoList;   // reference to the dataset
 
+    public MemoAdapter() {
+        this.memoList = new ArrayList<>();
+    }
+
     public MemoAdapter(ArrayList<Memo> memoList) {
         this.memoList = memoList;
     }
@@ -46,6 +50,10 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> {
         return memoList.size();
     }
 
+    public void setList(ArrayList<Memo> list) {
+        this.memoList = list;
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -60,3 +68,4 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> {
         }
     }
 }
+

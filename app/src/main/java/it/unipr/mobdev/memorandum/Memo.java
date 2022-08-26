@@ -16,12 +16,13 @@ public class Memo {
     private Boolean active = true;
 
     // constructor
-    public Memo (String title, String description, String date, String place, String hour) {
+    public Memo (String title, String description, String date, String place, String hour, Boolean isActive) {
         this.title = title;
         this.description = description;
         this.date = date;
         this.place = place;
         this.hour = hour;
+        this.active = isActive;
     }
 
     /*      GETTERS             */
