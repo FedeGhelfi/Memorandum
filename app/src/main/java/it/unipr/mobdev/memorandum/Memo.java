@@ -13,19 +13,43 @@ public class Memo {
     // Memo's state
     private Boolean expired = false;
     private Boolean completed = false;
-    private Boolean active = true;
+    private Boolean active = false;
 
     // constructor
-    public Memo (String title, String description, String date, String place, String hour, Boolean isActive) {
+    public Memo (String title, String description, String date, String place, String hour, String state) {
         this.title = title;
         this.description = description;
         this.date = date;
         this.place = place;
         this.hour = hour;
-        this.active = isActive;
+        setState(state);
+
     }
 
-    /*      GETTERS             */
+    private void setState(String state){
+        switch(state){
+            case "active":
+                active = true;
+                expired = false;
+                completed = false;
+                break;
+            case "expired":
+                active = false;
+                expired = true;
+                completed = false;
+                break;
+
+            case "completed":
+                active = false;
+                expired = false;
+                completed = true;
+        }
+    }
+
+    // to change memo state
+    public void changeState(String state) {
+        setState(state);
+    }
 
     public String getTitle() {
         return title;

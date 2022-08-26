@@ -16,6 +16,5 @@ public class MemoActiveAdapter extends MemoAdapter {
             }
         }
         setList(activeMemoList);
-
     }
 }
