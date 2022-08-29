@@ -5,16 +5,22 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+    private static final String TAG = "MainActivity";
+
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private RecyclerView rv_memo;
+    private FloatingActionButton addFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // setting the toolbar
-        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        toolbar = findViewById(R.id.my_toolbar);
         toolbar.setTitle("Memorandum");
 
         // set the Toolbar as action bar
@@ -31,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);        // back button
 
         /*
-        TEST: fill the list manually
+        TODO: Creare metodo per riempire provvisoriamente lista dopo aver controllato la size.
          */
         MemoList memoList = MemoList.getInstance();
 
@@ -41,14 +47,15 @@ public class MainActivity extends AppCompatActivity {
         memoList.addMemo(memo1);
         memoList.addMemo(memo2);
         memoList.addMemo(memo3);
+        Log.i(TAG,"CREAZIONE");
 
         //  ------------------------------------------------------------------
 
         // get the recycler view
-        RecyclerView rv_memo = findViewById(R.id.memo_recycler_view);
+        rv_memo = findViewById(R.id.memo_recycler_view);
         // define a layout manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-
+        // separator
         rv_memo.addItemDecoration(new DividerItemDecoration(rv_memo.getContext(), DividerItemDecoration.VERTICAL));
         // define the adapters
         MemoAdapter adapter = new MemoAdapter(memoList.getMemoList());
@@ -60,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
         // rv_memo.setAdapter(adapter);
         rv_memo.setAdapter(activeAdapter);
 
-        TabLayout tab = findViewById(R.id.tabLayout);
+        tabLayout = findViewById(R.id.tabLayout);
 
-        tab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
@@ -88,12 +95,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        FloatingActionButton fab = findViewById(R.id.add_memo_button);
+        addFab = findViewById(R.id.add_memo_button);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        // the event triggered by addFab
+        addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // TODO: creare intent per passare all'activity dove vengono raccolti i dati
+                Intent intent = new Intent(getApplicationContext(), AddActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, "CIAO");
+                startActivity(intent);
+
             }
         });
 
