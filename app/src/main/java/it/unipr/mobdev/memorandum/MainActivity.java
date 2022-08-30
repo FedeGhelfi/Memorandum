@@ -1,10 +1,13 @@
 package it.unipr.mobdev.memorandum;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +18,14 @@ import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+    private static final int CREATE_MEMO_REQUEST = 1;
     private static final String TAG = "MainActivity";
+
+    private MemoList list = null;
+    MemoAdapter adapter = null;
+    MemoActiveAdapter activeAdapter = null;
+    MemoExpiredAdapter expiredAdapter = null;
+    MemoCompleteAdapter completeAdapter = null;
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -39,17 +49,16 @@ public class MainActivity extends AppCompatActivity {
         /*
         TODO: Creare metodo per riempire provvisoriamente lista dopo aver controllato la size.
          */
-        MemoList memoList = MemoList.getInstance();
-
-        Memo memo1 = new Memo("Prova", "prima prova", "23-08-22", "Polesine", "15.10", "active");       // ACTIVE
-        Memo memo2 = new Memo("Ciao", "Bla Bla", "29-10-22", "Busseto", "12.45","active");
-        Memo memo3 = new Memo("Prova2", "prova 2", "23-08-22", "Polesine Pse", "15.15", "expired");     // EXPIRED
-        memoList.addMemo(memo1);
-        memoList.addMemo(memo2);
-        memoList.addMemo(memo3);
-        Log.i(TAG,"CREAZIONE");
+        list = MemoList.getInstance();
 
         //  ------------------------------------------------------------------
+
+
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
 
         // get the recycler view
         rv_memo = findViewById(R.id.memo_recycler_view);
@@ -58,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
         // separator
         rv_memo.addItemDecoration(new DividerItemDecoration(rv_memo.getContext(), DividerItemDecoration.VERTICAL));
         // define the adapters
-        MemoAdapter adapter = new MemoAdapter(memoList.getMemoList());
-        MemoActiveAdapter activeAdapter = new MemoActiveAdapter(memoList.getMemoList());
-        MemoExpiredAdapter expiredAdapter = new MemoExpiredAdapter(memoList.getMemoList());
-        MemoCompleteAdapter completeAdapter = new MemoCompleteAdapter(memoList.getMemoList());
+        adapter = new MemoAdapter(list.getMemoList());
+        activeAdapter = new MemoActiveAdapter(list.getMemoList());
+        expiredAdapter = new MemoExpiredAdapter(list.getMemoList());
+        completeAdapter = new MemoCompleteAdapter(list.getMemoList());
 
         rv_memo.setLayoutManager(layoutManager);
         // rv_memo.setAdapter(adapter);
@@ -101,14 +110,32 @@ public class MainActivity extends AppCompatActivity {
         addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: creare intent per passare all'activity dove vengono raccolti i dati
-                Intent intent = new Intent(getApplicationContext(), AddActivity.class);
-                intent.putExtra(EXTRA_MESSAGE, "CIAO");
+                Context context = view.getContext();
+                Intent intent = new Intent(context, AddActivity.class);
+                //startActivityForResult(intent, CREATE_MEMO_REQUEST);
                 startActivity(intent);
-
             }
         });
 
-
     }
+
+    /*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == CREATE_MEMO_REQUEST && resultCode == RESULT_OK) {
+            if(data.hasExtra("title") && data.hasExtra("description") &&
+            data.hasExtra("date") && data.hasExtra("time") && data.hasExtra("place")) {
+
+                list.addMemo(new Memo(data.getStringExtra("title"), data.getStringExtra("description"), data.getStringExtra("date"), data.getStringExtra("time"),
+                        data.getStringExtra("place"), "active"));
+
+                activeAdapter.notifyDataSetChanged();
+                MemoList.getInstance().setMemoList(list.getMemoList());
+            }
+        }
+    }
+
+     */
 }

@@ -88,6 +88,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imgBtnDate"/>
 
+    <!-- inserisci ic_lock_idle_alarm come src per imageButton -->
+
     <TextView
         android:id="@+id/textView_time"
         android:layout_width="wrap_content"
@@ -100,6 +102,23 @@
         app:layout_constraintStart_toEndOf="@id/btnTime"
         app:layout_constraintTop_toBottomOf="@id/textView_date"
         app:layout_constraintVertical_bias="0.0"/>
+
+    <EditText
+        android:id="@+id/edit_text_place"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="82dp"
+        android:layout_marginLeft="82dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginRight="80dp"
+        android:ems="10"
+        android:hint="Inserisci il luogo"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_time" />
 
     <Button
         android:id="@+id/saveButton"
@@ -116,7 +135,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

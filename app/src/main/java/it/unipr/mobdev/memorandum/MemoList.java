@@ -11,6 +11,7 @@ public class MemoList {
     private MemoList () {
         this.memoArrayList = new ArrayList<>();
     }
+    public void setMemoList(ArrayList<Memo> list) { this.memoArrayList = list; }
     public void addMemo(Memo memo) {
         memoArrayList.add(memo);
     }
