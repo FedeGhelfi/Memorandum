@@ -3,7 +3,7 @@ package it.unipr.mobdev.memorandum;
 // Model class
 
 public class Memo {
-
+    private int id;
     private String title;
     private String description;
     private String date;
@@ -16,14 +16,14 @@ public class Memo {
     private Boolean active = false;
 
     // constructor
-    public Memo (String title, String description, String date, String place, String hour, String state) {
+    public Memo (String title, String description, String date, String hour, String place, String state) {
+        this.id = MemoList.getInstance().size();
         this.title = title;
         this.description = description;
         this.date = date;
         this.place = place;
         this.hour = hour;
         setState(state);
-
     }
 
     private void setState(String state){
@@ -43,13 +43,16 @@ public class Memo {
                 active = false;
                 expired = false;
                 completed = true;
+                break;
         }
     }
 
-    // to change memo state
+    // public method to change memo state
     public void changeState(String state) {
         setState(state);
     }
+
+    public int getId(){ return id; }
 
     public String getTitle() {
         return title;
@@ -82,8 +85,4 @@ public class Memo {
     public Boolean isActive() {
         return active;
     }
-
-    /* ------------------- */
-
-
 }

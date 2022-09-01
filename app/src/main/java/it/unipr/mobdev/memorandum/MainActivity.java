@@ -44,11 +44,9 @@ public class MainActivity extends AppCompatActivity {
         // set the Toolbar as action bar
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
-       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);        // back button
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);        // back button
 
-        /*
-        TODO: Creare metodo per riempire provvisoriamente lista dopo aver controllato la size.
-         */
+        // get the instance
         list = MemoList.getInstance();
 
         //  ------------------------------------------------------------------
@@ -59,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+        System.out.println("ONSTART");
 
         // get the recycler view
         rv_memo = findViewById(R.id.memo_recycler_view);
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         // separator
         rv_memo.addItemDecoration(new DividerItemDecoration(rv_memo.getContext(), DividerItemDecoration.VERTICAL));
         // define the adapters
-        adapter = new MemoAdapter(list.getMemoList());
+        adapter = new MemoAdapter(MemoList.getInstance().getMemoList());
         activeAdapter = new MemoActiveAdapter(list.getMemoList());
         expiredAdapter = new MemoExpiredAdapter(list.getMemoList());
         completeAdapter = new MemoCompleteAdapter(list.getMemoList());
