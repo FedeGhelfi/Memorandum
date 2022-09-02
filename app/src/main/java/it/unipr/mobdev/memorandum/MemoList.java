@@ -31,9 +31,6 @@ public class MemoList {
         return list.size();
     }
 
-    public void removeMemo(int position) {
-        list.remove(position);
-    }
 
     public Memo getMemoAtIndex(int position) {
        return list.get(position);
@@ -53,4 +50,17 @@ public class MemoList {
             }
         }
     }
+
+
+    public void removeMemo(int id) {
+        for (int i = 0; i < list.size(); i++) {
+            Memo m = getMemoAtIndex(i);
+            if (m.getId() == id) {
+                list.remove(i);
+                return;
+            }
+        }
+    }
 }
+
+

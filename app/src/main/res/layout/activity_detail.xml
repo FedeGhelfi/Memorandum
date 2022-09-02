@@ -15,9 +15,11 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
         android:id="@+id/tv_setDescription"
@@ -30,8 +32,9 @@
         android:layout_marginRight="30dp"
         android:maxHeight="250dp"
         android:text="Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmente inalterato. Fu reso popolare, negli anni ’60, con la diffusione dei fogli di caratteri trasferibili “Letraset”, che contenevano passaggi del Lorem Ipsum, e più recentemente da software di impaginazione come Aldus PageMaker, che includeva versioni del Lorem Ipsum."
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
+        android:gravity="center_vertical|center_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.61"
         app:layout_constraintStart_toStartOf="@id/my_toolbar_detail"
@@ -43,57 +46,61 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:layout_marginBottom="60dp"
         android:text="Completa"
         android:textColor="#FFFFFF"
         app:backgroundTint="#1B5E20"
-        app:layout_constraintTop_toBottomOf="@id/tv_setDescription"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_setDescription"
         app:layout_constraintEnd_toEndOf="@id/tv_setDescription"
         tools:layout_editor_absoluteX="130dp" />
+
 
     <TextView
         android:id="@+id/tv_setDate"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="70dp"
         android:layout_marginRight="70dp"
         android:minWidth="30dp"
         android:text="data"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.141"
+        app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/my_toolbar_detail" />
-
 
     <TextView
         android:id="@+id/tv_setHour"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="50dp"
         android:minWidth="30dp"
         android:text="hour"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/tv_setDate"
-        app:layout_constraintTop_toBottomOf="@id/tv_setDate" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.554"
+        app:layout_constraintStart_toEndOf="@id/tv_setDate"
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar_detail" />
 
     <TextView
         android:id="@+id/tv_setPlace"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginRight="70dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:minWidth="30dp"
         android:text="place"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.836"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/my_toolbar_detail" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/tv_setDate"
+        app:layout_constraintTop_toBottomOf="@id/tv_setDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

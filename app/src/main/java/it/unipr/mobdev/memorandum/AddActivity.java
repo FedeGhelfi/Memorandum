@@ -6,6 +6,7 @@ import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +28,7 @@ public class AddActivity extends AppCompatActivity {
     private EditText decriptionMemo = null;
     private TextView dateMemo = null;
     private ImageButton pickDateMemo = null;
-    private Button pickTimeMemo = null;
+    private ImageButton pickTimeMemo = null;
     private TextView timeMemo = null;
     private EditText placeMemo = null;
     private Button save = null;
@@ -48,7 +49,7 @@ public class AddActivity extends AppCompatActivity {
 
 
         // gestisco onclick del date picker
-        pickDateMemo = findViewById(R.id.imgBtnDate);
+        pickDateMemo = (ImageButton) findViewById(R.id.imgBtnDate);
         pickDateMemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,6 +105,7 @@ public class AddActivity extends AppCompatActivity {
         String descriprion = decriptionMemo.getText().toString();
         String date = dateMemo.getText().toString();
         String time = timeMemo.getText().toString();
+        Log.d("ORARIO",time);
         String place = placeMemo.getText().toString();
 
         // Data odierna

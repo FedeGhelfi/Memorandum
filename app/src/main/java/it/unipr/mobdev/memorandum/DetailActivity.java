@@ -3,13 +3,20 @@ package it.unipr.mobdev.memorandum;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
+    private Context context;
 
     private Toolbar toolbar = null;
     private TextView tv_description = null;
@@ -17,12 +24,15 @@ public class DetailActivity extends AppCompatActivity {
     private TextView tv_hour = null;
     private TextView tv_place = null;
     private Button complete = null;
+    private int id;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        // get the intent coming from mainActivty
         Intent intent = getIntent();
         String title = intent.getStringExtra("TITLE");
 
@@ -31,18 +41,19 @@ public class DetailActivity extends AppCompatActivity {
         toolbar.setTitle(title);
         // set the Toolbar as action bar
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        //  getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);        // back button
 
-        // prendo i dati passati dalla view precedente
+
+        // get the cell data
         String description = intent.getStringExtra("DESCRIPTION");
         String date = intent.getStringExtra("DATE");
         String hour = intent.getStringExtra("HOUR");
         String place = intent.getStringExtra("PLACE");
-        int id = intent.getIntExtra("ID",-1);
+        id = intent.getIntExtra("ID",-1);
 
 
-        // setto i dati nelle textView
         tv_description = (TextView) findViewById(R.id.tv_setDescription);
         tv_date = (TextView) findViewById(R.id.tv_setDate);
         tv_hour = (TextView) findViewById(R.id.tv_setHour);
@@ -54,15 +65,62 @@ public class DetailActivity extends AppCompatActivity {
 
 
         complete = (Button) findViewById(R.id.complete_button);
+        // complete button event
         complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MemoList list = MemoList.getInstance();
                 list.setMemoState("completed",id);
+                DetailActivity.super.onNavigateUp();
+            }
+        });
+    }
+
+    // insert the item in the toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.delete_item:
+                removeMemo();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void removeMemo() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
+        builder.setMessage("Sei sicuro di voler rimuovere il promemoria?");
+        builder.setTitle("Attenzione!");
+        builder.setCancelable(true);
+
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                MemoList list = MemoList.getInstance();
+                list.removeMemo(id);
+                // todo: notifyDataSetChanged?
+                dialogInterface.cancel();
+                DetailActivity.super.onNavigateUp();
             }
         });
 
-
-
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        AlertDialog alert1 = builder.create();
+        alert1.show();
     }
 }

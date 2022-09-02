@@ -26,7 +26,6 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="80dp"
         android:layout_marginRight="80dp"
-        android:ems="10"
         android:hint="Inserisci il titolo"
         android:inputType="textPersonName"
         android:minHeight="48dp"
@@ -43,7 +42,6 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="80dp"
         android:layout_marginRight="80dp"
-        android:ems="10"
         android:hint="Inserisci una descrizione"
         android:inputType="textPersonName"
         android:minHeight="48dp"
@@ -53,8 +51,8 @@
 
     <ImageButton
         android:id="@+id/imgBtnDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         app:srcCompat="@android:drawable/ic_menu_my_calendar"
         android:layout_marginLeft="116dp"
         android:layout_marginStart="116dp"
@@ -72,15 +70,17 @@
         android:layout_marginTop="60dp"
         android:layout_marginBottom="40dp"
         android:textSize="20sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@id/imgBtnDate"
         app:layout_constraintTop_toBottomOf="@id/edit_text_description"
         app:layout_constraintVertical_bias="0.0"/>
 
 
-    <Button
+    <ImageButton
         android:id="@+id/btnTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/ic_baseline_access_alarm_24"
         android:layout_marginLeft="116dp"
         android:layout_marginStart="116dp"
         android:layout_marginTop="50dp"
@@ -88,7 +88,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imgBtnDate"/>
 
-    <!-- inserisci ic_lock_idle_alarm come src per imageButton -->
+    <!-- da aggiustare -->
 
     <TextView
         android:id="@+id/textView_time"
@@ -96,11 +96,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         android:layout_marginBottom="40dp"
         android:textSize="20sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@id/btnTime"
-        app:layout_constraintTop_toBottomOf="@id/textView_date"
+        app:layout_constraintTop_toBottomOf="@id/imgBtnDate"
         app:layout_constraintVertical_bias="0.0"/>
 
     <EditText
