@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private RecyclerView rv_memo;
     private FloatingActionButton addFab;
+    private FloatingActionButton mapFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         addFab = findViewById(R.id.add_memo_button);
-
         // the event triggered by addFab
         addFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +115,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        mapFab = findViewById(R.id.open_map);
+        mapFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = view.getContext();
+                Intent intent = new Intent(context, MapsActivity.class);
+                startActivity(intent);
+            }
+        }) ;
+
+
 
     }
 

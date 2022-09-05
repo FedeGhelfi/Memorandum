@@ -3,21 +3,22 @@ package it.unipr.mobdev.memorandum;
 // Model class
 
 public class Memo {
+
     private int id;
-    private String title;
-    private String description;
-    private String date;
-    private String place;
-    private String hour;
+    private final String title;
+    private final String description;
+    private final String date;
+    private final String place;
+    private final String hour;
 
     // Memo's state
     private Boolean expired = false;
     private Boolean completed = false;
     private Boolean active = false;
 
-    // constructor
+
     public Memo (String title, String description, String date, String hour, String place, String state) {
-        this.id = MemoList.getInstance().size();
+       // this.id = MemoList.getInstance().size();
         this.title = title;
         this.description = description;
         this.date = date;
@@ -52,37 +53,37 @@ public class Memo {
         setState(state);
     }
 
-    public int getId(){ return id; }
+    public int getId(){ return this.id; }
 
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public String getDate() {
-        return date;
+        return this.date;
     }
 
     public String getPlace() {
-        return place;
+        return this.place;
     }
 
     public String getHour() {
-        return hour;
+        return this.hour;
     }
 
     public Boolean isExpired() {
-        return expired;
+        return this.expired;
     }
 
     public Boolean isCompleted() {
-        return completed;
+        return this.completed;
     }
 
     public Boolean isActive() {
-        return active;
+        return this.active;
     }
 }

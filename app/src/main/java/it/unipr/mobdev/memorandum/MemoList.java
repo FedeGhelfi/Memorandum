@@ -1,6 +1,10 @@
 package it.unipr.mobdev.memorandum;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MemoList {
@@ -23,14 +27,13 @@ public class MemoList {
 
     public void setMemoList(ArrayList<Memo> list) { this.list = list; }
 
-    public void addMemo(Memo memo) {
+    public void addMemo(Memo memo)  {
         list.add(memo);
     }
 
     public int size() {
         return list.size();
     }
-
 
     public Memo getMemoAtIndex(int position) {
        return list.get(position);

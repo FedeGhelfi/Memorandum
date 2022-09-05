@@ -73,5 +73,18 @@
         app:layout_constraintBottom_toBottomOf="@+id/memo_recycler_view"
         app:layout_constraintEnd_toEndOf="@+id/memo_recycler_view" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+        android:id="@+id/open_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="24dp"
+        android:src="@android:drawable/ic_dialog_map"
+        android:tint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/memo_recycler_view"
+        app:layout_constraintStart_toStartOf="@+id/memo_recycler_view" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
