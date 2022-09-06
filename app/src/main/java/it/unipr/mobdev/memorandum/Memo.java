@@ -2,7 +2,13 @@ package it.unipr.mobdev.memorandum;
 
 // Model class
 
-public class Memo {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+public class Memo implements Comparable<Memo> {
 
     private int id;
     private final String title;
@@ -18,7 +24,7 @@ public class Memo {
 
 
     public Memo (String title, String description, String date, String hour, String place, String state) {
-       // this.id = MemoList.getInstance().size();
+        this.id = MemoList.getInstance().size();
         this.title = title;
         this.description = description;
         this.date = date;
@@ -76,6 +82,23 @@ public class Memo {
     }
 
     public Boolean isExpired() {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        Date current = Calendar.getInstance().getTime();
+
+        String date = getDate();
+        Date memoDate;
+        try {
+            memoDate = formatter.parse(date);
+
+            if (current.compareTo(memoDate) > 0) {
+                System.out.println("ABBIAMO SUPERATO LA DATA DEL MEMO");
+                setState("expired");
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         return this.expired;
     }
 
@@ -85,5 +108,30 @@ public class Memo {
 
     public Boolean isActive() {
         return this.active;
+    }
+
+    // sort by data
+    @Override
+    public int compareTo(Memo m) {
+
+        String stringData1 = getDate();
+        String stringData2 = m.getDate();
+
+        Date date1;
+        Date date2;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+        try {
+            date1 = sdf.parse(stringData1);
+            date2 = sdf.parse(stringData2);
+
+            assert date1 != null;
+            return date1.compareTo(date2);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
     }
 }

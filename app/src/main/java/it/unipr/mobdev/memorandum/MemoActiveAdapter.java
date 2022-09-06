@@ -1,6 +1,8 @@
 package it.unipr.mobdev.memorandum;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class MemoActiveAdapter extends MemoAdapter {
 
@@ -15,6 +17,8 @@ public class MemoActiveAdapter extends MemoAdapter {
                 activeMemoList.add(memo);
             }
         }
+
+        Collections.sort(activeMemoList); // uses the comparable criteria
         setList(activeMemoList);
     }
 }

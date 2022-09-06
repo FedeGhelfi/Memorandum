@@ -79,6 +79,7 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> {
                     int position = getLayoutPosition();
                     Memo m = list.get(position);
                     intent.putExtra("ID",m.getId());
+                    System.out.println("DALLA MAIN PASSO: " + m.getId());
                     intent.putExtra("TITLE", m.getTitle());
                     intent.putExtra("DESCRIPTION", m.getDescription());
                     intent.putExtra("DATE", m.getDate());

@@ -9,17 +9,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-    private static final int CREATE_MEMO_REQUEST = 1;
-    private static final String TAG = "MainActivity";
 
     private MemoList list = null;
     MemoAdapter adapter = null;
@@ -38,27 +41,86 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         // setting the toolbar
         toolbar = findViewById(R.id.my_toolbar);
         toolbar.setTitle("Memorandum");
 
         // set the Toolbar as action bar
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(false);
         // getSupportActionBar().setDisplayHomeAsUpEnabled(true);        // back button
 
         // get the instance
         list = MemoList.getInstance();
 
-        //  ------------------------------------------------------------------
+        String t = "ON-CREATE CALLED";
+        Log.v("ATTENZIONE",t);
 
 
+        // TODO: BUG, NON POSSO CANCELLARE ULTIMO ELEMENTO
+        // check to restore data from memory
+        /*
+        if (list.getMemoList().isEmpty()) {
+            String s = "LISTA VUOTA";
+            Log.v("ATTENZIONE",s);
+            loadData();
+        }
+         */
+
+        loadData();
+
+
+        mapFab = findViewById(R.id.open_map);
+        mapFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = view.getContext();
+                Intent intent = new Intent(context, MapsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        addFab = findViewById(R.id.add_memo_button);
+        addFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = view.getContext();
+                Intent intent = new Intent(context, AddActivity.class);
+                //startActivityForResult(intent, CREATE_MEMO_REQUEST);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        String s = "ATTENZIONE";
+        Log.v(s,"ON-RESTART CALLED");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        String s = "ATTENZIONE";
+        Log.v(s,"ON-RESUME CALLED");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        String s = "ATTENZIONE";
+        Log.v(s,"ON-PAUSE CALLED");
+        saveData();
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-        System.out.println("ONSTART");
+        String s = "ATTENZIONE";
+        Log.v(s,"ON-START CALLED");
+
 
         // get the recycler view
         rv_memo = findViewById(R.id.memo_recycler_view);
@@ -103,50 +165,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        addFab = findViewById(R.id.add_memo_button);
-        // the event triggered by addFab
-        addFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Context context = view.getContext();
-                Intent intent = new Intent(context, AddActivity.class);
-                //startActivityForResult(intent, CREATE_MEMO_REQUEST);
-                startActivity(intent);
-            }
-        });
-
-        mapFab = findViewById(R.id.open_map);
-        mapFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Context context = view.getContext();
-                Intent intent = new Intent(context, MapsActivity.class);
-                startActivity(intent);
-            }
-        }) ;
-
-
-
     }
 
-    /*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    private void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(MemoList.getInstance().getMemoList());
+        editor.putString("memo list", json);
+        editor.apply();
+    }
 
-        if(requestCode == CREATE_MEMO_REQUEST && resultCode == RESULT_OK) {
-            if(data.hasExtra("title") && data.hasExtra("description") &&
-            data.hasExtra("date") && data.hasExtra("time") && data.hasExtra("place")) {
 
-                list.addMemo(new Memo(data.getStringExtra("title"), data.getStringExtra("description"), data.getStringExtra("date"), data.getStringExtra("time"),
-                        data.getStringExtra("place"), "active"));
+    private void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("memo list", null);
+        Type type = new TypeToken<ArrayList<Memo>>() {}.getType();
 
-                activeAdapter.notifyDataSetChanged();
-                MemoList.getInstance().setMemoList(list.getMemoList());
-            }
+       // temp arrayList with saved data
+        ArrayList<Memo> recovered = gson.fromJson(json, type);
+
+        if (recovered == null) {
+            recovered = new ArrayList<>();
+        }
+
+        for (Memo memo : recovered) {
+            list.addMemo(memo);
         }
     }
-
-     */
 }

@@ -7,6 +7,7 @@ import androidx.fragment.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -92,6 +93,20 @@ public class AddActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        /*
+                 FUNZIONA!
+             */
+        if (item.getItemId() == android.R.id.home) {
+            String s = "ATTENZIONE";
+            Log.v(s, "BACK BUTTON PRESSED");
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void check() throws ParseException {
         Toast toast = null;
 
@@ -128,16 +143,18 @@ public class AddActivity extends AppCompatActivity {
         else if(place.length() == 0){
             toast.makeText(this, "Inserisci il luogo del promemoria", toast.LENGTH_SHORT).show();
         }
+        /*
         else if(sdf.parse(date).before(sdf.parse(formattedDate))){
             toast.makeText(this, "La data del promemoria deve essere successiva a quella odierna",toast.LENGTH_SHORT).show();
         }
+         */
         else {
             finish(title, descriprion, date, time, place);
         }
     }
 
 
-    private void finish(String title, String descriprion, String date, String time, String place) {
+    private void finish(String title, String description, String date, String time, String place) {
 /*      Intent returnIntent = new Intent(getBaseContext(), MainActivity.class);
 
         returnIntent.putExtra("title",title);
@@ -149,7 +166,7 @@ public class AddActivity extends AppCompatActivity {
         setResult(RESULT_OK, returnIntent);
 
  */
-        Memo m = new Memo(title, descriprion, date, time, place, "active");
+        Memo m = new Memo(title, description, date, time, place, "active");
         MemoList.getInstance().addMemo(m);
         super.finish();
     }

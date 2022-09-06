@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,7 +43,7 @@ public class DetailActivity extends AppCompatActivity {
         // set the Toolbar as action bar
         setSupportActionBar(toolbar);
         //  getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);        // back button
 
 
@@ -52,6 +53,7 @@ public class DetailActivity extends AppCompatActivity {
         String hour = intent.getStringExtra("HOUR");
         String place = intent.getStringExtra("PLACE");
         id = intent.getIntExtra("ID",-1);
+        System.out.println("ID ARRIVATO: " + id);
 
 
         tv_description = (TextView) findViewById(R.id.tv_setDescription);
@@ -71,10 +73,35 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 MemoList list = MemoList.getInstance();
                 list.setMemoState("completed",id);
-                DetailActivity.super.onNavigateUp();
+                System.out.println(id);
+                //DetailActivity.super.onNavigateUp();
+                DetailActivity.super.finish();
             }
         });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+
+            /*
+                 FUNZIONA!
+             */
+            case android.R.id.home:
+                String s = "ATTENZIONE";
+                Log.v(s, "BACK BUTTON PRESSED");
+                finish();
+                return true;
+
+            case R.id.delete_item:
+                removeMemo();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     // insert the item in the toolbar
     @Override
@@ -84,17 +111,7 @@ public class DetailActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.delete_item:
-                removeMemo();
-                return true;
 
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     public void removeMemo() {
 
@@ -110,7 +127,8 @@ public class DetailActivity extends AppCompatActivity {
                 list.removeMemo(id);
                 // todo: notifyDataSetChanged?
                 dialogInterface.cancel();
-                DetailActivity.super.onNavigateUp();
+                // DetailActivity.super.onNavigateUp();     mi richiama la onCreate
+                DetailActivity.super.finish();
             }
         });
 
@@ -120,6 +138,7 @@ public class DetailActivity extends AppCompatActivity {
                 dialogInterface.cancel();
             }
         });
+
         AlertDialog alert1 = builder.create();
         alert1.show();
     }

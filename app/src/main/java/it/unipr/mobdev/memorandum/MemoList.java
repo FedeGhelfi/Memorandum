@@ -48,6 +48,7 @@ public class MemoList {
         for (int i = 0; i < list.size(); i++) {
             Memo m = getMemoAtIndex(i);
             if (m.getId() == id){
+                System.out.println(m.getTitle() + " " + id);
                 m.changeState(state);
                 return;
             }

@@ -26,6 +26,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import it.unipr.mobdev.memorandum.databinding.ActivityMapsBinding;
 
@@ -34,6 +36,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private LocationManager locationManager;
     private MemoList list;
+    ExecutorService mThreadPool = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
 
@@ -87,9 +91,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault())  ;
         
         for (int i = 0; i < list.size(); ++i) {
-            String name = list.getMemoAtIndex(i).getPlace();
-            String description = list.getMemoAtIndex(i).getDescription();
-            String title = list.getMemoAtIndex(i).getTitle();
+            Memo m = list.getMemoAtIndex(i);
+            String name = null;
+            String description = null;
+            String title = null;
+
+            // mostrati sulla mappa solo se sono attivi
+            if (m.isActive()) {
+                name = list.getMemoAtIndex(i).getPlace();
+                description = list.getMemoAtIndex(i).getDescription();
+                title = list.getMemoAtIndex(i).getTitle();
+            }
 
             try {
                 Iterator<Address> addresses = geocoder.getFromLocationName(name, 1).iterator();
