@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         // setting the toolbar
         toolbar = findViewById(R.id.my_toolbar);
         toolbar.setTitle("Memorandum");
@@ -57,20 +56,9 @@ public class MainActivity extends AppCompatActivity {
         String t = "ON-CREATE CALLED";
         Log.v("ATTENZIONE",t);
 
-
-        // TODO: BUG, NON POSSO CANCELLARE ULTIMO ELEMENTO
-        // check to restore data from memory
-        /*
-        if (list.getMemoList().isEmpty()) {
-            String s = "LISTA VUOTA";
-            Log.v("ATTENZIONE",s);
-            loadData();
-        }
-         */
-
         loadData();
 
-
+        // open Map
         mapFab = findViewById(R.id.open_map);
         mapFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,13 +69,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // open Add Activity
         addFab = findViewById(R.id.add_memo_button);
         addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Context context = view.getContext();
                 Intent intent = new Intent(context, AddActivity.class);
-                //startActivityForResult(intent, CREATE_MEMO_REQUEST);
                 startActivity(intent);
             }
         });
@@ -121,30 +109,36 @@ public class MainActivity extends AppCompatActivity {
         String s = "ATTENZIONE";
         Log.v(s,"ON-START CALLED");
 
-
-        // get the recycler view
-        rv_memo = findViewById(R.id.memo_recycler_view);
-        // define a layout manager
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        // separator
-        rv_memo.addItemDecoration(new DividerItemDecoration(rv_memo.getContext(), DividerItemDecoration.VERTICAL));
-        // define the adapters
-        adapter = new MemoAdapter(MemoList.getInstance().getMemoList());
-        activeAdapter = new MemoActiveAdapter(list.getMemoList());
-        expiredAdapter = new MemoExpiredAdapter(list.getMemoList());
-        completeAdapter = new MemoCompleteAdapter(list.getMemoList());
-
-        rv_memo.setLayoutManager(layoutManager);
-        // rv_memo.setAdapter(adapter);
-        rv_memo.setAdapter(activeAdapter);
+        buildRecyclerView();
 
         tabLayout = findViewById(R.id.tabLayout);
 
+
+        // the active tab --> the correct adapter
+        switch (tabLayout.getSelectedTabPosition()){
+            case 0:
+                rv_memo.setAdapter(activeAdapter);
+                break;
+            case 1:
+                rv_memo.setAdapter(completeAdapter);
+                break;
+            case 2:
+                rv_memo.setAdapter(expiredAdapter);
+                break;
+            default:
+                rv_memo.setAdapter(activeAdapter);
+        }
+
+        // per quando cambio tab
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 switch (position) {
+
+                    case 0:
+                        rv_memo.setAdapter(activeAdapter);
+                        break;
                     case 1:
                         rv_memo.setAdapter(completeAdapter);
                         break;
@@ -165,6 +159,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void buildRecyclerView() {
+        // get the recycler view
+        rv_memo = findViewById(R.id.memo_recycler_view);
+        // define a layout manager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        // separator
+        rv_memo.addItemDecoration(new DividerItemDecoration(rv_memo.getContext(), DividerItemDecoration.VERTICAL));
+        // define the adapters
+        adapter = new MemoAdapter(MemoList.getInstance().getMemoList());
+        activeAdapter = new MemoActiveAdapter(list.getMemoList());
+        expiredAdapter = new MemoExpiredAdapter(list.getMemoList());
+        completeAdapter = new MemoCompleteAdapter(list.getMemoList());
+
+        rv_memo.setLayoutManager(layoutManager);
+        // rv_memo.setAdapter(adapter);
+        rv_memo.setAdapter(activeAdapter);
     }
 
     private void saveData() {

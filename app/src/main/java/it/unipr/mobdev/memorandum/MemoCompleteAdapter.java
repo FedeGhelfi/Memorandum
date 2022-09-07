@@ -13,6 +13,8 @@ public class MemoCompleteAdapter extends MemoAdapter {
                 completeMemoList.add(memo);
             }
         }
+
+
         setList(completeMemoList);
     }
 }

@@ -65,7 +65,7 @@ public class DetailActivity extends AppCompatActivity {
         tv_hour.setText(hour);
         tv_place.setText(place);
 
-
+        // todo: passare stato e se è completo nascondere button
         complete = (Button) findViewById(R.id.complete_button);
         // complete button event
         complete.setOnClickListener(new View.OnClickListener() {
