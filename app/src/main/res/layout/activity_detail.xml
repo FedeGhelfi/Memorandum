@@ -60,7 +60,6 @@
         android:id="@+id/tv_setDate"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:drawableLeft="@drawable/ic_baseline_calendar_month"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="70dp"
         android:layout_marginRight="70dp"
@@ -71,20 +70,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/my_toolbar_detail" />
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar_detail"
+        app:drawableLeftCompat="@drawable/ic_baseline_calendar_month" />
 
     <TextView
         android:id="@+id/tv_setHour"
         android:layout_width="wrap_content"
-        android:drawableLeft="@drawable/ic_baseline_alarm"
         android:layout_height="30dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="48dp"
         android:minWidth="30dp"
         android:text="hour"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
+        app:drawableLeftCompat="@drawable/ic_baseline_alarm"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.554"
+        app:layout_constraintHorizontal_bias="0.711"
         app:layout_constraintStart_toEndOf="@id/tv_setDate"
         app:layout_constraintTop_toBottomOf="@id/my_toolbar_detail" />
 
@@ -92,17 +92,16 @@
         android:id="@+id/tv_setPlace"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:drawableLeft="@drawable/ic_baseline_place_24"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
         android:minWidth="30dp"
         android:text="place"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
+        app:drawableLeftCompat="@drawable/ic_baseline_place_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.409"
         app:layout_constraintStart_toStartOf="@id/tv_setDate"
         app:layout_constraintTop_toBottomOf="@id/tv_setDate" />
 
