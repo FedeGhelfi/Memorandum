@@ -60,6 +60,7 @@
         android:id="@+id/tv_setDate"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:drawableLeft="@drawable/ic_baseline_calendar_month"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="70dp"
         android:layout_marginRight="70dp"
@@ -75,6 +76,7 @@
     <TextView
         android:id="@+id/tv_setHour"
         android:layout_width="wrap_content"
+        android:drawableLeft="@drawable/ic_baseline_alarm"
         android:layout_height="30dp"
         android:layout_marginTop="50dp"
         android:minWidth="30dp"
@@ -90,6 +92,7 @@
         android:id="@+id/tv_setPlace"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:drawableLeft="@drawable/ic_baseline_place_24"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="20dp"
