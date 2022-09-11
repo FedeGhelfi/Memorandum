@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
+    private static final String TAG = "DetailActivity";
+
     private Context context;
 
     private Toolbar toolbar = null;
@@ -53,7 +55,7 @@ public class DetailActivity extends AppCompatActivity {
         String hour = intent.getStringExtra("HOUR");
         String place = intent.getStringExtra("PLACE");
         id = intent.getIntExtra("ID",-1);
-        System.out.println("ID ARRIVATO: " + id);
+       // System.out.println("ID ARRIVATO: " + id);
 
 
         tv_description = (TextView) findViewById(R.id.tv_setDescription);
@@ -66,6 +68,7 @@ public class DetailActivity extends AppCompatActivity {
         tv_place.setText(place);
 
         // todo: passare stato e se è completo nascondere button
+        // todo: passare stato e se è scaduto impostare scritta arancio
         complete = (Button) findViewById(R.id.complete_button);
         // complete button event
         complete.setOnClickListener(new View.OnClickListener() {
@@ -80,19 +83,18 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
+
+    // click on toolbar items
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
 
-            /*
-                 FUNZIONA!
-             */
+            // back
             case android.R.id.home:
-                String s = "ATTENZIONE";
-                Log.v(s, "BACK BUTTON PRESSED");
                 finish();
                 return true;
 
+            // delete
             case R.id.delete_item:
                 removeMemo();
                 return true;
@@ -115,6 +117,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public void removeMemo() {
 
+        // alert dialog with choices
         AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
         builder.setMessage("Sei sicuro di voler rimuovere il promemoria?");
         builder.setTitle("Attenzione!");
@@ -125,9 +128,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 MemoList list = MemoList.getInstance();
                 list.removeMemo(id);
-                // todo: notifyDataSetChanged?
                 dialogInterface.cancel();
-                // DetailActivity.super.onNavigateUp();     mi richiama la onCreate
                 DetailActivity.super.finish();
             }
         });

@@ -95,9 +95,7 @@ public class AddActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /*
-                 FUNZIONA!
-             */
+
         if (item.getItemId() == android.R.id.home) {
             String s = "ATTENZIONE";
             Log.v(s, "BACK BUTTON PRESSED");

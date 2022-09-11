@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     private MemoList list = null;
     MemoAdapter adapter = null;
     MemoActiveAdapter activeAdapter = null;
@@ -54,11 +55,12 @@ public class MainActivity extends AppCompatActivity {
         list = MemoList.getInstance();
 
         String t = "ON-CREATE CALLED";
-        Log.v("ATTENZIONE",t);
+        Log.v(TAG,t);
 
+        // restore data from memory
         loadData();
 
-        // open Map
+        // open MapActivity
         mapFab = findViewById(R.id.open_map);
         mapFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,37 +84,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRestart(){
-        super.onRestart();
-        String s = "ATTENZIONE";
-        Log.v(s,"ON-RESTART CALLED");
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        String s = "ATTENZIONE";
-        Log.v(s,"ON-RESUME CALLED");
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
-        String s = "ATTENZIONE";
-        Log.v(s,"ON-PAUSE CALLED");
         saveData();
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-        String s = "ATTENZIONE";
-        Log.v(s,"ON-START CALLED");
 
         buildRecyclerView();
 
+        // get the tab layout
         tabLayout = findViewById(R.id.tabLayout);
-
 
         // the active tab --> the correct adapter
         switch (tabLayout.getSelectedTabPosition()){
@@ -129,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 rv_memo.setAdapter(activeAdapter);
         }
 
-        // per quando cambio tab
+        // change tab --> correct adapter
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
