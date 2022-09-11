@@ -115,7 +115,7 @@ public class AddActivity extends AppCompatActivity {
         placeMemo = (EditText) findViewById(R.id.edit_text_place);
 
         String title = titleMemo.getText().toString();
-        String descriprion = decriptionMemo.getText().toString();
+        String description = decriptionMemo.getText().toString();
         String date = dateMemo.getText().toString();
         String time = timeMemo.getText().toString();
         Log.d("ORARIO",time);
@@ -132,7 +132,7 @@ public class AddActivity extends AppCompatActivity {
         if(title.length() == 0) {
             toast.makeText(this, "Inserisci il titolo del promemoria!",toast.LENGTH_SHORT).show();
         }
-        else if(descriprion.length() == 0) {
+        else if(description.length() == 0) {
             toast.makeText(this, "Inserisci la descrizione del promemoria!", toast.LENGTH_SHORT).show();
         }
         else if(date.length() == 0) {
@@ -141,29 +141,19 @@ public class AddActivity extends AppCompatActivity {
         else if(place.length() == 0){
             toast.makeText(this, "Inserisci il luogo del promemoria", toast.LENGTH_SHORT).show();
         }
-        /*
+
         else if(sdf.parse(date).before(sdf.parse(formattedDate))){
             toast.makeText(this, "La data del promemoria deve essere successiva a quella odierna",toast.LENGTH_SHORT).show();
         }
-         */
+
         else {
-            finish(title, descriprion, date, time, place);
+            finish(title, description, date, time, place);
         }
     }
 
 
     private void finish(String title, String description, String date, String time, String place) {
-/*      Intent returnIntent = new Intent(getBaseContext(), MainActivity.class);
 
-        returnIntent.putExtra("title",title);
-        returnIntent.putExtra("description", descriprion);
-        returnIntent.putExtra("date",date);
-        returnIntent.putExtra("time", time);
-        returnIntent.putExtra("place",place);
-
-        setResult(RESULT_OK, returnIntent);
-
- */
         Memo m = new Memo(title, description, date, time, place, "active");
         MemoList.getInstance().addMemo(m);
         super.finish();
