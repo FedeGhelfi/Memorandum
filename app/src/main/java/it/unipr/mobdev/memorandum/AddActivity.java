@@ -24,6 +24,8 @@ import java.util.Locale;
 
 public class AddActivity extends AppCompatActivity {
 
+    private static final String TAG = "AddActivity";
+
     private Toolbar toolbar = null;
     private EditText titleMemo = null;
     private EditText decriptionMemo = null;
@@ -97,8 +99,7 @@ public class AddActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == android.R.id.home) {
-            String s = "ATTENZIONE";
-            Log.v(s, "BACK BUTTON PRESSED");
+            Log.v(TAG, "BACK BUTTON PRESSED");
             finish();
             return true;
         }
@@ -118,7 +119,6 @@ public class AddActivity extends AppCompatActivity {
         String description = decriptionMemo.getText().toString();
         String date = dateMemo.getText().toString();
         String time = timeMemo.getText().toString();
-        Log.d("ORARIO",time);
         String place = placeMemo.getText().toString();
 
         // Data odierna

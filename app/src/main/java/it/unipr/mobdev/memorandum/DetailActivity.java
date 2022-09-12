@@ -20,7 +20,7 @@ public class DetailActivity extends AppCompatActivity {
     private static final String TAG = "DetailActivity";
 
     private Context context;
-
+    private MemoList list = null;
     private Toolbar toolbar = null;
     private TextView tv_description = null;
     private TextView tv_date = null;
@@ -67,21 +67,43 @@ public class DetailActivity extends AppCompatActivity {
         tv_hour.setText(hour);
         tv_place.setText(place);
 
-        // todo: passare stato e se è completo nascondere button
+
+        list = MemoList.getInstance();
+
+
         // todo: passare stato e se è scaduto impostare scritta arancio
-        complete = (Button) findViewById(R.id.complete_button);
-        // complete button event
-        complete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MemoList list = MemoList.getInstance();
-                list.setMemoState("completed",id);
-                System.out.println(id);
-                //DetailActivity.super.onNavigateUp();
-                DetailActivity.super.finish();
+
+        Boolean checkActive = false;
+
+        for (int i = 0; i < list.size(); i++) {
+            Memo m = list.getMemoAtIndex(i);
+            if (m.getId() == id){
+                if (m.isActive()) {
+                    checkActive = true;
+                    break;
+                }
             }
-        });
-    }
+        }
+
+        // complete button available only if the memo is active
+
+            complete = (Button) findViewById(R.id.complete_button);
+
+            if (!checkActive) {
+                complete.setVisibility(View.GONE);
+            }
+            // complete button event
+            complete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MemoList list = MemoList.getInstance();
+                    list.setMemoState("completed", id);
+                    System.out.println(id);
+                    //DetailActivity.super.onNavigateUp();
+                    DetailActivity.super.finish();
+                }
+            });
+        }
 
 
     // click on toolbar items

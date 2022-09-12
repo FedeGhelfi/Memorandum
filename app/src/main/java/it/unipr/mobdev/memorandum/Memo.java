@@ -110,6 +110,7 @@ public class Memo implements Comparable<Memo> {
         return this.active;
     }
 
+
     // sort by data
     @Override
     public int compareTo(Memo m) {
