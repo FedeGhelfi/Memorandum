@@ -7,15 +7,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.UUID;
 
 public class Memo implements Comparable<Memo> {
 
-    private int id;
+    private String id;
     private final String title;
     private final String description;
     private final String date;
     private final String place;
     private final String hour;
+    private String state;
 
     // Memo's state
     private Boolean expired = false;
@@ -23,8 +25,8 @@ public class Memo implements Comparable<Memo> {
     private Boolean active = false;
 
 
-    public Memo (String title, String description, String date, String hour, String place, String state) {
-        this.id = MemoList.getInstance().size();
+    public Memo(String title, String description, String date, String hour, String place, String state) {
+        this.id = UUID.randomUUID().toString(); // get a random id
         this.title = title;
         this.description = description;
         this.date = date;
@@ -33,8 +35,9 @@ public class Memo implements Comparable<Memo> {
         setState(state);
     }
 
-    private void setState(String state){
-        switch(state){
+
+    private void setState(String state) {
+        switch (state) {
             case "active":
                 active = true;
                 expired = false;
@@ -59,7 +62,9 @@ public class Memo implements Comparable<Memo> {
         setState(state);
     }
 
-    public int getId(){ return this.id; }
+    public String getId() {
+        return this.id;
+    }
 
     public String getTitle() {
         return this.title;
@@ -83,23 +88,44 @@ public class Memo implements Comparable<Memo> {
 
     public Boolean isExpired() {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy-HH:mm", Locale.getDefault());
+        //SimpleDateFormat df = new SimpleDateFormat("HH:mm", Locale.getDefault());
         Date current = Calendar.getInstance().getTime();
 
-        String date = getDate();
-        Date memoDate;
-        try {
-            memoDate = formatter.parse(date);
+        String datehour = getDate() + "-" + getHour();
+        Date datehourparsed;
 
-            if (current.compareTo(memoDate) > 0) {
-                System.out.println("ABBIAMO SUPERATO LA DATA DEL MEMO");
+
+
+        try {
+            /*
+            memoDate = formatter.parse(date);
+            memoHour = df.parse(hour);
+            */
+            datehourparsed = formatter.parse(datehour);
+
+
+            if (current.compareTo(datehourparsed) > 0) {
+                System.out.println("ABBIAMO SUPERATO LA SCADENZA DEL MEMO");
                 setState("expired");
+                return true;
             }
+
+            /*
+            // se è stesso giorno ma ora è passata
+            else if ((current.compareTo(memoDate) == 0) && (current.compareTo(memoHour) > 0)) {
+                System.out.println("ABBIAMO SUPERATO L'ORA DEL MEMO");
+                setState("expired");
+                expired = true;
+            }
+            */
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        return this.expired;
+        return false;
+
     }
 
     public Boolean isCompleted() {
@@ -110,6 +136,20 @@ public class Memo implements Comparable<Memo> {
         return this.active;
     }
 
+    public String getState() {
+
+        String state = null;
+
+        if (isActive()) {
+            state = "active";
+        } else if (isCompleted()) {
+            state = "completed";
+        } else if (isExpired()) {
+            state = "expired";
+        }
+
+        return state;
+    }
 
     // sort by data
     @Override
@@ -120,7 +160,10 @@ public class Memo implements Comparable<Memo> {
 
         Date date1;
         Date date2;
+
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
 
         try {
             date1 = sdf.parse(stringData1);

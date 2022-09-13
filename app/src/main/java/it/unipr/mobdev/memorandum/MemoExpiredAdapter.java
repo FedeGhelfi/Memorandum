@@ -10,7 +10,8 @@ public class MemoExpiredAdapter extends MemoAdapter {
 
         ArrayList<Memo> expiredMemoList = new ArrayList<Memo>();
         for (Memo memo : memoList) {
-            if (memo.isExpired()) {
+           // if (memo.isExpired()) {
+             if(memo.isExpired()){
                 expiredMemoList.add(memo);
             }
         }

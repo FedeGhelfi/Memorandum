@@ -13,7 +13,9 @@ public class MemoActiveAdapter extends MemoAdapter {
 
         ArrayList<Memo> activeMemoList = new ArrayList<Memo>();
         for (Memo memo : memoList) {
-            if (memo.isActive()) {
+           // if (memo.isActive()) {
+
+             if(!memo.isExpired() && memo.getState().equals("active")){
                 activeMemoList.add(memo);
             }
         }

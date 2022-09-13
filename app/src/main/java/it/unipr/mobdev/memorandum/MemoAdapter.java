@@ -1,6 +1,7 @@
 package it.unipr.mobdev.memorandum;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +49,17 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> {
         //Memo memo = list.get(position);
         Memo memo = list.get(position);
 
+
         // set title and date for the item
         holder.tv_memo_title.setText(memo.getTitle());
-        holder.tv_memo_date.setText(memo.getDate());
+
+        if (memo.isExpired()){      // SET TEXT RED IF MEMO IS EXPIRED
+            holder.tv_memo_date.setTextColor(Color.RED);
+            holder.tv_memo_date.setText("SCADUTO");
+        }
+        else {
+            holder.tv_memo_date.setText(memo.getDate());
+        }
     }
 
     @Override
@@ -79,12 +88,12 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> {
                     int position = getLayoutPosition();
                     Memo m = list.get(position);
                     intent.putExtra("ID",m.getId());
-                    System.out.println("DALLA MAIN PASSO: " + m.getId());
                     intent.putExtra("TITLE", m.getTitle());
                     intent.putExtra("DESCRIPTION", m.getDescription());
                     intent.putExtra("DATE", m.getDate());
                     intent.putExtra("HOUR",m.getHour());
                     intent.putExtra("PLACE", m.getPlace());
+                    intent.putExtra("STATE", m.getState());
                     view.getContext().startActivity(intent);
                 }
             });

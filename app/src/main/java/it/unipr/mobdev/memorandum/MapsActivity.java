@@ -110,7 +110,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng latLng = new LatLng(41.902782, 12.496366);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 6));
 
-        // ottengo il geocoder
+        // get the geocoder
         Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
 
         for (int i = 0; i < list.size(); ++i) {
@@ -119,7 +119,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String description = null;
             String title = null;
 
-            // mostrati sulla mappa solo se sono attivi
+            // only active memo in the map
             if (m.isActive()) {
                 name = list.getMemoAtIndex(i).getPlace();
                 description = list.getMemoAtIndex(i).getDescription();
@@ -265,6 +265,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     @Override
                     public void onSuccess(Void unused) {
                         Log.d(TAG, "onSuccess: Geofence added...");
+                        Toast.makeText(getApplicationContext(),"Geofence aggiunto...", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

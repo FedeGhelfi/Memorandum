@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,7 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
-    private static final String TAG = "DetailActivity";
+    private static final String TAG = "DetailActivityFEDE";
 
     private Context context;
     private MemoList list = null;
@@ -27,7 +28,7 @@ public class DetailActivity extends AppCompatActivity {
     private TextView tv_hour = null;
     private TextView tv_place = null;
     private Button complete = null;
-    private int id;
+    private String id;
 
 
     @Override
@@ -54,62 +55,54 @@ public class DetailActivity extends AppCompatActivity {
         String date = intent.getStringExtra("DATE");
         String hour = intent.getStringExtra("HOUR");
         String place = intent.getStringExtra("PLACE");
-        id = intent.getIntExtra("ID",-1);
-       // System.out.println("ID ARRIVATO: " + id);
+        String state = intent.getStringExtra("STATE");
+
+
+        id = intent.getStringExtra("ID");
+
 
 
         tv_description = (TextView) findViewById(R.id.tv_setDescription);
         tv_date = (TextView) findViewById(R.id.tv_setDate);
         tv_hour = (TextView) findViewById(R.id.tv_setHour);
         tv_place = (TextView) findViewById(R.id.tv_setPlace);
+
+        complete = (Button) findViewById(R.id.complete_button);
+
+        // complete button available only if the memo is active
+        if (state.equals("completed") || state.equals("expired")) {
+            complete.setVisibility(View.GONE);
+        }
+
+        if (state.equals("expired")) {
+            tv_date.setTextColor(Color.RED);
+            tv_hour.setTextColor(Color.RED);
+        }
+
         tv_description.setText(description);
         tv_date.setText(date);
         tv_hour.setText(hour);
         tv_place.setText(place);
 
 
-        list = MemoList.getInstance();
-
-
-        // todo: passare stato e se è scaduto impostare scritta arancio
-
-        Boolean checkActive = false;
-
-        for (int i = 0; i < list.size(); i++) {
-            Memo m = list.getMemoAtIndex(i);
-            if (m.getId() == id){
-                if (m.isActive()) {
-                    checkActive = true;
-                    break;
-                }
+        // complete button event
+        complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                list = MemoList.getInstance();
+                list.setMemoState("completed", id);
+                System.out.println(id);
+                //DetailActivity.super.onNavigateUp();
+                DetailActivity.super.finish();
             }
-        }
-
-        // complete button available only if the memo is active
-
-            complete = (Button) findViewById(R.id.complete_button);
-
-            if (!checkActive) {
-                complete.setVisibility(View.GONE);
-            }
-            // complete button event
-            complete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    MemoList list = MemoList.getInstance();
-                    list.setMemoState("completed", id);
-                    System.out.println(id);
-                    //DetailActivity.super.onNavigateUp();
-                    DetailActivity.super.finish();
-                }
-            });
-        }
+        });
+    }
 
 
     // click on toolbar items
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
 
             // back
             case android.R.id.home:
@@ -131,10 +124,9 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbar_menu,menu);
+        inflater.inflate(R.menu.toolbar_menu, menu);
         return true;
     }
-
 
 
     public void removeMemo() {

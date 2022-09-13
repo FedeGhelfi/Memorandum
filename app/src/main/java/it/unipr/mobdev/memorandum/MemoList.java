@@ -44,10 +44,10 @@ public class MemoList {
     }
 
     // given an ID and a state, it looks for the corresponding memo
-    public void setMemoState(String state, int id) {
+    public void setMemoState(String state, String id) {
         for (int i = 0; i < list.size(); i++) {
             Memo m = getMemoAtIndex(i);
-            if (m.getId() == id){
+            if (m.getId().equals(id)){
                 System.out.println(m.getTitle() + " " + id);
                 m.changeState(state);
                 return;
@@ -56,10 +56,10 @@ public class MemoList {
     }
 
 
-    public void removeMemo(int id) {
+    public void removeMemo(String id) {
         for (int i = 0; i < list.size(); i++) {
             Memo m = getMemoAtIndex(i);
-            if (m.getId() == id) {
+            if (m.getId().equals(id)) {
                 list.remove(i);
                 return;
             }
