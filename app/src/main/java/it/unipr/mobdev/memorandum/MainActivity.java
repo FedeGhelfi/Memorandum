@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,10 +27,10 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private MemoList list = null;
-    MemoAdapter adapter = null;
-    MemoActiveAdapter activeAdapter = null;
-    MemoExpiredAdapter expiredAdapter = null;
-    MemoCompleteAdapter completeAdapter = null;
+    private MemoAdapter adapter = null;
+    private MemoActiveAdapter activeAdapter = null;
+    private MemoExpiredAdapter expiredAdapter = null;
+    private MemoCompleteAdapter completeAdapter = null;
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -51,11 +52,10 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(false);
         // getSupportActionBar().setDisplayHomeAsUpEnabled(true);        // back button
 
+
         // get the instance
         list = MemoList.getInstance();
 
-        String t = "ON-CREATE CALLED";
-        Log.v(TAG,t);
 
         // restore data from memory
         loadData();
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         // separator
         rv_memo.addItemDecoration(new DividerItemDecoration(rv_memo.getContext(), DividerItemDecoration.VERTICAL));
         // define the adapters
-        adapter = new MemoAdapter(MemoList.getInstance().getMemoList());
+        adapter = new MemoAdapter(list.getMemoList());
         activeAdapter = new MemoActiveAdapter(list.getMemoList());
         expiredAdapter = new MemoExpiredAdapter(list.getMemoList());
         completeAdapter = new MemoCompleteAdapter(list.getMemoList());

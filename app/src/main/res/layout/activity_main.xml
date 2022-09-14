@@ -48,6 +48,7 @@
 
     </com.google.android.material.tabs.TabLayout>
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/memo_recycler_view"
         android:layout_width="0dp"

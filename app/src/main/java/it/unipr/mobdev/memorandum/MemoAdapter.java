@@ -14,15 +14,20 @@ import java.util.ArrayList;
 
 public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> {
 
-    private ArrayList<Memo> list;   // reference to the dataset
+
+
+
+    private ArrayList<Memo> list;
+
+
+    public MemoAdapter(ArrayList<Memo> memoList) {
+        this.list = memoList;
+    }
+
 
     // constructor without parameters (for child classes)
     public MemoAdapter() {
         this.list = new ArrayList<>();
-    }
-
-    public MemoAdapter(ArrayList<Memo> memoList) {
-        this.list = memoList;
     }
 
     // to set up filtered lists
@@ -70,6 +75,16 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        // strings that will be use inside intent to switch to detailActivity
+        public static final String ID_MEMO = "it.unipr.mobdev.memorandum.ViewHolder.ID_MEMO";
+        public static final String TITLE_MEMO = "it.unipr.mobdev.memorandum.ViewHolder.TITLE_MEMO";
+        public static final String DESC_MEMO = "it.unipr.mobdev.memorandum.ViewHolder.DESC_MEMO";
+        public static final String DATE_MEMO = "it.unipr.mobdev.memorandum.ViewHolder.DATE_MEMO";
+        public static final String HOUR_MEMO = "it.unipr.mobdev.memorandum.ViewHolder.HOUR_MEMO";
+        public static final String PLACE_MEMO = "it.unipr.mobdev.memorandum.ViewHolder.PLACE_MEMO";
+        public static final String STATE_MEMO = "it.unipr.mobdev.memorandum.ViewHolder.STATE_MEMO";
+
+
         TextView tv_memo_title, tv_memo_date;
 
         public ViewHolder(@NonNull View itemView) {
@@ -87,13 +102,13 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> {
                     Intent intent = new Intent(view.getContext(),DetailActivity.class);
                     int position = getLayoutPosition();
                     Memo m = list.get(position);
-                    intent.putExtra("ID",m.getId());
-                    intent.putExtra("TITLE", m.getTitle());
-                    intent.putExtra("DESCRIPTION", m.getDescription());
-                    intent.putExtra("DATE", m.getDate());
-                    intent.putExtra("HOUR",m.getHour());
-                    intent.putExtra("PLACE", m.getPlace());
-                    intent.putExtra("STATE", m.getState());
+                    intent.putExtra(ID_MEMO,m.getId());
+                    intent.putExtra(TITLE_MEMO, m.getTitle());
+                    intent.putExtra(DESC_MEMO, m.getDescription());
+                    intent.putExtra(DATE_MEMO, m.getDate());
+                    intent.putExtra(HOUR_MEMO,m.getHour());
+                    intent.putExtra(PLACE_MEMO, m.getPlace());
+                    intent.putExtra(STATE_MEMO, m.getState());
                     view.getContext().startActivity(intent);
                 }
             });

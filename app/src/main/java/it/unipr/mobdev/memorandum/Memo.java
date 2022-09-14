@@ -161,9 +161,7 @@ public class Memo implements Comparable<Memo> {
         Date date1;
         Date date2;
 
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-
 
         try {
             date1 = sdf.parse(stringData1);
