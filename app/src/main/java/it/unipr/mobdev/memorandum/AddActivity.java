@@ -51,7 +51,7 @@ public class AddActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);        // back button
 
 
-        // gestisco onclick del date picker
+        // DatePicker's onClick
         pickDateMemo = (ImageButton) findViewById(R.id.imgBtnDate);
         pickDateMemo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +67,7 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-        // gestisco onclick del time picker
+        // TimePicker's onClick
         pickTimeMemo = findViewById(R.id.btnTime);
         pickTimeMemo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +83,7 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
+        // save button
         save = findViewById(R.id.saveButton);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +91,7 @@ public class AddActivity extends AppCompatActivity {
                 try {
                     check();
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -99,7 +101,6 @@ public class AddActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == android.R.id.home) {
-            Log.v(TAG, "BACK BUTTON PRESSED");
             finish();
             return true;
         }
@@ -121,14 +122,14 @@ public class AddActivity extends AppCompatActivity {
         String time = timeMemo.getText().toString();
         String place = placeMemo.getText().toString();
 
-        // Data odierna
+        // Current date
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String formattedDate = df.format(c);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
-        // controlli
+
         if(title.length() == 0) {
             toast.makeText(this, "Inserisci il titolo del promemoria!",toast.LENGTH_SHORT).show();
         }

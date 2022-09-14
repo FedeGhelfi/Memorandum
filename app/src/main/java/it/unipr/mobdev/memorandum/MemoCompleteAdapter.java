@@ -6,7 +6,7 @@ public class MemoCompleteAdapter extends MemoAdapter {
     public MemoCompleteAdapter(ArrayList<Memo> memoList) {
         super();
 
-        // popolo una lista con memo completati
+        // list with only completed memo
         ArrayList<Memo> completeMemoList = new ArrayList<Memo>();
         for (Memo memo : memoList) {
             if (memo.isCompleted()) {

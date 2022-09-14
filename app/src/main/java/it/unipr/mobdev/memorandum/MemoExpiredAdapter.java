@@ -6,11 +6,10 @@ public class MemoExpiredAdapter extends MemoAdapter {
     public MemoExpiredAdapter(ArrayList<Memo> memoList) {
         super();
 
-        // popolo una lista con memo scaduti
 
+        // list with only expired memo
         ArrayList<Memo> expiredMemoList = new ArrayList<Memo>();
         for (Memo memo : memoList) {
-           // if (memo.isExpired()) {
              if(memo.isExpired()){
                 expiredMemoList.add(memo);
             }
