@@ -41,7 +41,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
         // Get the transition type.
         int transitionType = geofencingEvent.getGeofenceTransition();
         if (transitionType == Geofence.GEOFENCE_TRANSITION_ENTER) {
-            Log.d(TAG, "ENTRATO");
+            Log.d(TAG, "ENTRATO NEL FENCE");
         }
 
         // Get the geofences that were triggered. A single event can trigger

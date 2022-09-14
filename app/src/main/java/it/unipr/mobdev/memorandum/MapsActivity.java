@@ -148,47 +148,67 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void enableUserLocation() {
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
+
+            Log.d(TAG, "Access fine location = granted");
             mMap.setMyLocationEnabled(true);
+
         } else {
+
+            Log.d(TAG, "Access fine location = NOTgranted");
 
             //Ask for permission
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
+
                 //We need to show user a dialog for displaying why the permission is needed and then ask for the permission...
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         FINE_LOCATION_ACCESS_REQUEST_CODE);
+
+                Log.d(TAG, "Request permission fine location done");
+
             } else {
+
+                Log.d(TAG, "ELSE del shouldshow");
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         FINE_LOCATION_ACCESS_REQUEST_CODE);
+                Log.d(TAG, "Request permission fine location done nell'else del should");
             }
         }
     }
 
     private void enableBackgroundLocation() {
-        Log.d(TAG,"Sono dentro enable background");
+        Log.d(TAG, "Sono dentro enable background");
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_BACKGROUND_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            Log.d(TAG,"Ho i permessi di background");
+
+            Log.d(TAG, "Ho i permessi di background");
+
         } else {
 
+            Log.d(TAG, "devp chied i permessi di back");
             //Ask for permission
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
                 //We need to show user a dialog for displaying why the permission is needed and then ask for the permission...
+
+                Log.d(TAG, "should show del background");
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION},
                         BACKGROUND_LOCATION_ACCESS_REQUEST_CODE);
+                Log.d(TAG, "Request permission bacground done");
+
             } else {
+
+                Log.d(TAG, "else del should show del back");
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION},
                         BACKGROUND_LOCATION_ACCESS_REQUEST_CODE);
+                Log.d(TAG, "Request permission background done nell'else");
             }
         }
     }
@@ -197,23 +217,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
         if (requestCode == FINE_LOCATION_ACCESS_REQUEST_CODE) {
+
+            Log.d(TAG, "REQUEST CODE == FINE LOCATION ACCES REQUEST");
+
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //We have the permission
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "GRANT RESULT[0] = GRANTED");
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED &&
+                        ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                                != PackageManager.PERMISSION_GRANTED) {
+
+                    Log.d(TAG, "FINE LOCATION NOT GRANTED");
                     return;
                 }
+                enableBackgroundLocation();
                 mMap.setMyLocationEnabled(true);
             } else {
                 //We do not have the permission..
+                Log.d(TAG, "GRAND RESULT = NOT GRANTED");
             }
         }
 
         if (requestCode == BACKGROUND_LOCATION_ACCESS_REQUEST_CODE) {
+
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //We have the permission
                 Toast.makeText(this, "You can add geofences...", Toast.LENGTH_SHORT).show();
             } else {
+
                 //We do not have the permission..
                 Toast.makeText(this, "Background location access is neccessary for geofences to trigger...", Toast.LENGTH_SHORT).show();
             }
@@ -238,7 +272,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     private void addGeofence(LatLng latLng, float radius, String title) {
-
         // title as ID of the geofence
         Geofence geofence = geofenceHelper.getGeofence(title, latLng, radius, Geofence.GEOFENCE_TRANSITION_ENTER);
         GeofencingRequest geofencingRequest = geofenceHelper.getGeofencingRequest(geofence);
@@ -251,11 +284,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Log.d(TAG, "Sono in addGeofence");
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            Log.d(TAG,"NON CI SONO LE PERMISSION FINE");
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            Log.d(TAG, "NON CI SONO LE PERMISSION FINE");
             return;
-        }
-        else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED){
+
+        } else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
             Log.d(TAG, "NON CI SONO LE PERMISSION BACKGROUND");
             return;
         }
@@ -265,7 +300,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     @Override
                     public void onSuccess(Void unused) {
                         Log.d(TAG, "onSuccess: Geofence added...");
-                        Toast.makeText(getApplicationContext(),"Geofence aggiunto...", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Geofence aggiunto...", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

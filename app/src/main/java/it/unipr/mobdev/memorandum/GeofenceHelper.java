@@ -53,8 +53,7 @@ public class GeofenceHelper extends ContextWrapper {
 
         // define a pending intent that starts a broadcast receiver
         Intent intent = new Intent(this, GeofenceBroadcastReceiver.class);
-        Log.d(TAG, "Ho startato BroadcastReceiver");
-        pendingIntent = PendingIntent.getBroadcast(this, 2607, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return pendingIntent;
     }
 
