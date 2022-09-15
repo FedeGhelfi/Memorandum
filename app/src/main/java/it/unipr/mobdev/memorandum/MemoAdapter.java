@@ -62,6 +62,11 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> {
             holder.tv_memo_date.setTextColor(Color.RED);
             holder.tv_memo_date.setText("SCADUTO");
         }
+        else if(memo.getState() == "completed"){
+            holder.tv_memo_date.setTextColor(Color.GREEN);
+            holder.tv_memo_date.setText("COMPLETATO");
+        }
+
         else {
             holder.tv_memo_date.setText(memo.getDate());
         }
