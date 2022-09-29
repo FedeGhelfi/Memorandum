@@ -13,7 +13,7 @@ Un utente può salvare un promemoria caratterizzato da:
   - Titolo
   - Descrizione
 
-- I promemoria possono essere segnati come “attivi”, “scaduto” o “completati” (dall’utente)
-- I promemoria ancora attivi vanno visualizzati in una lista ordinata per data ed in una mappa
-- Quando l’utente entra nella regione (geofence) di un promemoria attivo l’app genera una notifica
+I promemoria possono essere segnati come “attivi”, “scaduto” o “completati” (dall’utente)
+I promemoria ancora attivi vanno visualizzati in una lista ordinata per data ed in una mappa
+Quando l’utente entra nella regione (geofence) di un promemoria attivo l’app genera una notifica
 locale
